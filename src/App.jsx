@@ -1,120 +1,73 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useState, useRef } from 'react'
+// import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cv, setCV] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    location: "",
+  })
+
+  const [showEditBtn, setEditBtn] = useState(false)
+  const nameInputRef = useRef(null)
+  const emailInputRef = useRef(null)
+  const phoneInputRef = useRef(null)
+  const locationInputRef = useRef(null)
+
+  function submitCV(event) {
+    event.preventDefault()
+    setCV({
+      name: event.currentTarget.elements.name.value,
+      email: event.currentTarget.elements.email.value,
+      phone: event.currentTarget.elements.phone.value,
+      location: event.currentTarget.elements.location.value,
+    })
+    event.currentTarget.reset()
+    setEditBtn(true);
+  }
+
+  function editForm() {
+    nameInputRef.current.value = cv.name ?? ""
+    emailInputRef.current.value = cv.email ?? ""
+    phoneInputRef.current.value = cv.phone ?? ""
+    locationInputRef.current.value = cv.location ?? ""
+  }
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+      <div className="cv-form-container">
+        <form onSubmit={submitCV}>
+          <div className="form-row">
+            <label htmlFor="name">Full Name *</label>
+            <input type="text" id="name" name="name" ref={nameInputRef} maxlength="64" required/>
+          </div>
+          <div className="form-row">
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" name="email" ref={emailInputRef}/>
+          </div>
+          <div className="form-row">
+            <label htmlFor="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" maxlength="24" ref={phoneInputRef}/>
+          </div>
+            <div className="form-row">
+            <label htmlFor="Location">Location</label>
+            <input type="text" id="location" name="location" maxlength="64" ref={locationInputRef}/>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div className="cv-container">
+        <div className="edit-btn-container" style={{ display: showEditBtn ? "block" : "none" }}>
+          <button onClick={editForm} >Edit</button>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+        <h1>Curriculum Vitae</h1>
+        <div className="cv-name">{cv.name}</div>
+        <div className="cv-email">{cv.email}</div>
+        <div className="cv-phone">{cv.phone}</div>
+        <div className="cv-location">{cv.location}</div>
+      </div>
     </>
   )
 }
