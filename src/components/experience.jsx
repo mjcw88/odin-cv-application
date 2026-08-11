@@ -2,102 +2,83 @@ import '../styles/form.css';
 
 function Experience({ cv, setCV }) {
   const jobs = cv.experience;
+
+  const updateJob = (index, field, value) => {
+    const updatedExperience = jobs.map((job, i) =>
+      i === index ? { ...job, [field]: value } : job
+    );
+    setCV({ ...cv, experience: updatedExperience });
+  };
+
   const jobsList = jobs.map((job, index) =>
-    <>
-      <div className="job-form-container" key={index}>
-        <div className="form-row">
-          <label htmlFor={`company-${index}`}>Company</label>
-          <input type="text" id={`company-${index}`} name="company" maxLength="64" value={job.company} onChange={(e) =>
-            setCV({
-              ...cv,
-              experience: {
-                ...cv.experience,
-                job: {
-                  ...cv.experience.job,
-                  company: e.target.value
-                }
-              }
-            })
-          }/>
-        </div>
-        <div className="form-row" >
-          <label htmlFor={`role-${index}`}>Role</label>
-          <input type="text" id={`role-${index}`} name="role" maxLength="64" value={job.role} onChange={(e) =>
-            setCV({
-              ...cv,
-              experience: {
-                ...cv.experience,
-                job: {
-                  ...cv.experience.job,
-                  role: e.target.value
-                }
-              }
-            })
-          }/>
-        </div>
-        <div className="form-row" >
-          <label htmlFor={`jobStart-${index}`}>Start Date</label>
-          <input type="date" id={`jobStart-${index}`} name="jobStart" value={job.start} onChange={(e) =>
-            setCV({
-              ...cv,
-              experience: {
-                ...cv.experience,
-                job: {
-                  ...cv.experience.job,
-                  start: e.target.value
-                }
-              }
-            })
-          }/>
-        </div>
-        <div className="form-row" >
-          <label htmlFor={`jobEnd-${index}`}>End Date</label>
-          <input type="date" id={`jobEnd-${index}`} name="jobEnd" value={job.end} onChange={(e) =>
-            setCV({
-              ...cv,
-              experience: {
-                ...cv.experience,
-                job: {
-                  ...cv.experience.job,
-                  end: e.target.value
-                }
-              }
-            })
-          }/>
-        </div>
-        <div className="form-row" >
-          <label htmlFor={`location-${index}`}>Location</label>
-          <input type="text" id={`location-${index}`} name="location" value={job.location} onChange={(e) =>
-            setCV({
-              ...cv,
-              experience: {
-                ...cv.experience,
-                job: {
-                  ...cv.experience.job,
-                  location: e.target.value
-                }
-              }
-            })
-          }/>
-        </div>
-        <div className="form-row" >
-          <label htmlFor={`description-${index}`}>Description</label>
-          <textarea id={`description-${index}`} name="description" maxLength="500" value={job.description} onChange={(e) =>
-            setCV({
-              ...cv,
-              experience: {
-                ...cv.experience,
-                job: {
-                  ...cv.experience.job,
-                  description: e.target.value
-                }
-              }
-            })
-          }/>
-        </div>
+    <div className="job-form-container" key={index}>
+      <div className="form-row">
+        <label htmlFor={`company-${index}`}>Company *</label>
+        <input 
+          type="text"
+          id={`company-${index}`} 
+          name="company"
+          maxLength="64"
+          value={job.company}
+          onChange={(e) => updateJob(index, 'company', e.target.value)}
+          required/>
       </div>
-    </>
-    )
+      <div className="form-row" >
+        <label htmlFor={`role-${index}`}>Role *</label>
+        <input
+          type="text"
+          id={`role-${index}`}
+          name="role"
+          maxLength="64"
+          value={job.role}
+          onChange={(e) => updateJob(index, 'role', e.target.value)}
+          required/>
+      </div>
+      <div className="form-row" >
+        <label htmlFor={`jobStart-${index}`}>Start Date *</label>
+        <input
+          type="month"
+          id={`jobStart-${index}`}
+          name="jobStart"
+          pattern="\d{4}-\d{2}"
+          placeholder="YYYY-MM"
+          value={job.start}
+          onChange={(e) => updateJob(index, 'start', e.target.value)}
+        />
+      </div>
+      <div className="form-row" >
+        <label htmlFor={`jobEnd-${index}`}>End Date</label>
+        <input
+          type="month"
+          id={`jobEnd-${index}`}
+          name="jobEnd"
+          pattern="\d{4}-\d{2}"
+          placeholder="YYYY-MM"
+          value={job.end}
+          onChange={(e) => updateJob(index, 'end', e.target.value)}
+        />
+      </div>
+      <div className="form-row" >
+        <label htmlFor={`location-${index}`}>Location *</label>
+        <input
+          type="text"
+          id={`location-${index}`}
+          name="location"
+          value={job.location} 
+          onChange={(e) => updateJob(index, 'location', e.target.value)}
+          required/>
+      </div>
+      <div className="form-row" >
+        <label htmlFor={`description-${index}`}>Description</label>
+        <textarea
+          id={`description-${index}`}
+          name="description"
+          maxLength="500"
+          value={job.description} 
+          onChange={(e) => updateJob(index, 'description', e.target.value)}/>
+      </div>
+    </div>
+  )
 
   return (
     <>
