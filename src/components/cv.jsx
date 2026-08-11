@@ -34,6 +34,9 @@ function CV({ cv }) {
       </div>
     </>
   )
+  
+  const hasJobs = jobsList.length > 0;
+  const hasSchools = schoolList.length > 0;
 
   return (
     <>
@@ -47,14 +50,18 @@ function CV({ cv }) {
           <div>{cv.location}</div>
         </div>
       </div>
-      <div className="experience-container">
-        <h2>Experience</h2>
-        {jobsList}
-      </div>
-      <div className="education-container">
-        <h2>Education</h2>
-        {schoolList}
-      </div>
+      {hasJobs 
+      ? <div className="experience-container">
+          <h2>Experience</h2>
+          {jobsList}
+        </div> 
+      : null}
+      {hasSchools 
+      ? <div className="education-container">
+          <h2>Education</h2>
+          {schoolList}
+        </div>
+        : null}
     </>
   )
 }

@@ -31,8 +31,6 @@ const blankCV = {
     }
   ]
 };
-  
-  // const [showEditBtn, setEditBtn] = useState(false)
 
   const [cv, setCV] = useState(blankCV);
   const [draft, setDraft] = useState(cv);
@@ -40,7 +38,6 @@ const blankCV = {
   function submitCV(event) {
     event.preventDefault();
     setCV(draft);
-    // setEditBtn(true);
     setDraft(blankCV);
   }
 
