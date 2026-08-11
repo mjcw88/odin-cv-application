@@ -21,12 +21,17 @@ body {
     padding: var(--padding);
 }
 
-#root {
+.header-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-cv-container {
     display: flex;
     gap: 1rem;
 }
 
-#root > div {
-    border: 2px solid black;
+.form-cv-container > div {
     padding: 1rem;
+    border: 2px solid black;
 }

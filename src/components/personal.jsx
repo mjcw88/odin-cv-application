@@ -1,5 +1,5 @@
 // import { useState, useRef } from 'react';
-import '../styles/personal.css';
+import '../styles/form.css';
 
 function Personal({ cv, setCV }) {
   return (
