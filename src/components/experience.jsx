@@ -99,12 +99,14 @@ function Experience({ cv, setCV }) {
         <textarea
           id={`description-${index}`}
           name="description"
-          maxLength="500"
+          maxLength="1000"
           value={job.description} 
           onChange={(e) => updateJob(index, 'description', e.target.value)}
         />
       </div>
-      <button type="button" onClick={() => removeJob(index)}>Remove</button>
+      <div className="form-row">
+        <button type="button" onClick={() => removeJob(index)}>Remove</button>
+      </div>
     </div>
   )
 
@@ -112,7 +114,7 @@ function Experience({ cv, setCV }) {
     <>
     <div className="experience-container background-style">
       <div className="form-header">
-          <h2>Experience</h2>
+          <h3>Experience</h3>
           <button type="button" onClick={addJob}>Add</button>
       </div>
       {jobsList}

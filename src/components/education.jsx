@@ -87,7 +87,9 @@ function Education({ cv, setCV }) {
           onChange={(e) => updateSchool(index, 'location', e.target.value)}
           required/>
       </div>
-      <button type="button" onClick={() => removeSchool(index)}>Remove</button>
+      <div className="form-row">
+        <button type="button" onClick={() => removeSchool(index)}>Remove</button>
+      </div>
     </div>
   )
 
@@ -95,7 +97,7 @@ function Education({ cv, setCV }) {
     <>
     <div className="education-container background-style">
       <div className="form-header">
-          <h2>Education</h2>
+          <h3>Education</h3>
           <button type="button" onClick={addSchool}>Add</button>
       </div>
       {schoolList}

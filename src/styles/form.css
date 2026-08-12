@@ -1,3 +1,9 @@
+:root {
+    --grey: hsl(218,13.6%,84.1%);
+    --blue: hsl(221,97.5%,53.5%);
+    --red: hsl(348,100%,50%);
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -25,19 +31,31 @@ form {
 }
 
 .form-row label {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1rem;
 }
 
 .form-row input[type="text"],
 .form-row input[type="email"],
 .form-row input[type="tel"],
-.form-row input[type="month"] {
+.form-row input[type="month"],
+textarea {
     border-radius: calc(var(--borderRadius) / 2);
     outline: none;
-    border: none;
+    border: 0.125rem solid var(--grey);
     padding: .75rem;
-    background-color: lightgrey;
+}
+
+.form-row input[type="text"]:focus,
+.form-row input[type="email"]:focus,
+.form-row input[type="tel"]:focus,
+.form-row input[type="month"]:focus,
+textarea:focus {
+    border: 0.125rem solid var(--blue);
+}
+
+textarea {
+    resize: vertical;
 }
 
 .form-header {
@@ -57,11 +75,15 @@ form {
     justify-content: center;
 }
 
-.edit-btn-container > button,
-.submit-btn-container > button {
-    border-radius: calc(var(--borderRadius) / 2);
-    outline: none;
-    border: none;
-    padding: .5rem;
-    width: 100%;
+@media only screen and (min-width: 768px) {
+    .form-cv-container {
+        flex-direction: row;
+        align-items: start;
+        margin: 0 auto;
+        max-width: 1600px;
+    }
+
+    .form-container {
+        min-width: 25%;
+    }
 }

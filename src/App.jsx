@@ -33,7 +33,7 @@ const blankCV = {
 
   return (
     <>
-      <div className="header-container background-style">
+      <div className="header-container">
         <h1>Curriculum Vitae</h1>
       </div>
       <div className="form-cv-container">
