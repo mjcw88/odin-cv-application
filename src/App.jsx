@@ -12,15 +12,7 @@ const blankCV = {
   phone: "",
   location: "",
   experience: [],
-  education: [
-    // {
-    //   name: "",
-    //   qualification: "",
-    //   start: "",
-    //   end: "",
-    //   location: "",
-    // }
-  ]
+  education: [],
 };
 
   const [cv, setCV] = useState(blankCV);

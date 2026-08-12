@@ -1,6 +1,27 @@
 import '../styles/form.css';
 
 function Education({ cv, setCV }) {
+  function addSchool() {
+    const school = {
+      id: crypto.randomUUID(),
+      name: "",
+      qualification: "",
+      start: "",
+      end: "",
+      location: "",
+    };
+
+    const updatedSchools = [...cv.education, school];
+
+    setCV({ ...cv, education: updatedSchools });
+  }
+
+  function removeSchool(index) {
+    const updatedSchools = [...cv.education];
+    updatedSchools.splice(index, 1);
+    setCV({ ...cv, education: updatedSchools });
+  }
+
   const schools = cv.education;
 
   const updateSchool = (index, field, value) => {
@@ -11,7 +32,7 @@ function Education({ cv, setCV }) {
   };
 
   const schoolList = schools.map((school, index) =>
-    <div className="school-form-container" key={index}>
+    <div className="school-form-container" key={school.id}>
       <div className="form-row">
         <label htmlFor={`school-${index}`}>School *</label>
         <input
@@ -66,31 +87,19 @@ function Education({ cv, setCV }) {
           onChange={(e) => updateSchool(index, 'location', e.target.value)}
           required/>
       </div>
+      <button type="button" onClick={() => removeSchool(index)}>Remove</button>
     </div>
   )
 
-  function addSchool() {
-    const school = {
-      name: "",
-      qualification: "",
-      start: "",
-      end: "",
-      location: "",
-    };
-
-    const updatedSchools = [...cv.education, school];
-
-    setCV({ ...cv, education: updatedSchools });
-  }
-
-
   return (
     <>
-    <div className="form-header">
-        <h2>Education</h2>
-        <button type="button" onClick={addSchool}>Add</button>
+    <div className="education-container">
+      <div className="form-header">
+          <h2>Education</h2>
+          <button type="button" onClick={addSchool}>Add</button>
+      </div>
+      {schoolList}
     </div>
-    {schoolList}
     </>
   )
 }

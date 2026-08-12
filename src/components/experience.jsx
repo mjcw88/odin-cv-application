@@ -1,6 +1,28 @@
 import '../styles/form.css';
 
 function Experience({ cv, setCV }) {
+  function addJob() {
+    const job = {
+      id: crypto.randomUUID(),
+      company: "",
+      role: "",
+      start: "",
+      end: "",
+      location: "",
+      description: "",
+    };
+
+    const updatedJobs = [...cv.experience, job];
+
+    setCV({ ...cv, experience: updatedJobs });
+  }
+
+  function removeJob(index) {
+    const updatedJobs = [...cv.experience];
+    updatedJobs.splice(index, 1);
+    setCV({ ...cv, experience: updatedJobs });
+  }
+
   const jobs = cv.experience;
 
   const updateJob = (index, field, value) => {
@@ -11,7 +33,7 @@ function Experience({ cv, setCV }) {
   };
 
   const jobsList = jobs.map((job, index) =>
-    <div className="job-form-container" key={index}>
+    <div className="job-form-container" key={job.ids}>
       <div className="form-row">
         <label htmlFor={`company-${index}`}>Company *</label>
         <input 
@@ -82,31 +104,19 @@ function Experience({ cv, setCV }) {
           onChange={(e) => updateJob(index, 'description', e.target.value)}
         />
       </div>
+      <button type="button" onClick={() => removeJob(index)}>Remove</button>
     </div>
   )
 
-  function addJob() {
-    const job = {
-      company: "",
-      role: "",
-      start: "",
-      end: "",
-      location: "",
-      description: "",
-    };
-
-    const updatedJobs = [...cv.experience, job];
-
-    setCV({ ...cv, experience: updatedJobs });
-  }
-
   return (
     <>
-    <div className="form-header">
-        <h2>Experience</h2>
-        <button type="button" onClick={addJob}>Add</button>
+    <div className="experience-container">
+      <div className="form-header">
+          <h2>Experience</h2>
+          <button type="button" onClick={addJob}>Add</button>
+      </div>
+      {jobsList}
     </div>
-    {jobsList}
     </>
   )
 }
