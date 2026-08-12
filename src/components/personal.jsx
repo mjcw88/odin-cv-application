@@ -4,7 +4,10 @@ import '../styles/form.css';
 function Personal({ cv, setCV }) {
   return (
     <>
-      <div className="personal-details-container">
+      <div className="personal-details-container background-style">
+        <div className="form-header">
+          <span className="required-container"><b>*</b> = required</span>
+        </div>
         <div className="form-header">
           <h2>Personal Details</h2>
         </div>

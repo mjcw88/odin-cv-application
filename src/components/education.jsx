@@ -93,7 +93,7 @@ function Education({ cv, setCV }) {
 
   return (
     <>
-    <div className="education-container">
+    <div className="education-container background-style">
       <div className="form-header">
           <h2>Education</h2>
           <button type="button" onClick={addSchool}>Add</button>

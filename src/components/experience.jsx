@@ -110,7 +110,7 @@ function Experience({ cv, setCV }) {
 
   return (
     <>
-    <div className="experience-container">
+    <div className="experience-container background-style">
       <div className="form-header">
           <h2>Experience</h2>
           <button type="button" onClick={addJob}>Add</button>

@@ -33,11 +33,11 @@ const blankCV = {
 
   return (
     <>
-      <div className="header-container">
+      <div className="header-container background-style">
         <h1>Curriculum Vitae</h1>
       </div>
       <div className="form-cv-container">
-        <div className="edit-btn-container">
+        <div className="edit-btn-container background-style">
           <button onClick={editForm} disabled={editBtn}>Edit</button>
         </div>
         <div className="form-container">
@@ -45,7 +45,9 @@ const blankCV = {
             <Personal cv={draft} setCV={setDraft} />
             <Experience cv={draft} setCV={setDraft} />
             <Education cv={draft} setCV={setDraft} />
-            <button type="submit">Submit</button>
+            <div className="submit-btn-container background-style">
+              <button type="submit">Submit</button>
+            </div>
           </form>
         </div>
         <div className="cv-container">
