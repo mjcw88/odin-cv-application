@@ -86,4 +86,9 @@ textarea {
     .form-container {
         min-width: 25%;
     }
+
+    .cv-container {
+        flex: 1;
+        min-width: 0;
+    }
 }
