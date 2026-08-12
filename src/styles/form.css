@@ -9,3 +9,8 @@ form {
     flex-direction: column;
     gap: .5rem;
 }
+
+.form-header {
+    display: flex;
+    gap: 1rem;
+}

@@ -67,12 +67,28 @@ function Education({ cv, setCV }) {
           required/>
       </div>
     </div>
-    )
+  )
+
+  function addSchool() {
+    const school = {
+      name: "",
+      qualification: "",
+      start: "",
+      end: "",
+      location: "",
+    };
+
+    const updatedSchools = [...cv.education, school];
+
+    setCV({ ...cv, education: updatedSchools });
+  }
+
 
   return (
     <>
     <div className="form-header">
         <h2>Education</h2>
+        <button type="button" onClick={addSchool}>Add</button>
     </div>
     {schoolList}
     </>

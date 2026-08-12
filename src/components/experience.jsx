@@ -21,7 +21,8 @@ function Experience({ cv, setCV }) {
           maxLength="64"
           value={job.company}
           onChange={(e) => updateJob(index, 'company', e.target.value)}
-          required/>
+          required
+        />
       </div>
       <div className="form-row" >
         <label htmlFor={`role-${index}`}>Role *</label>
@@ -32,7 +33,8 @@ function Experience({ cv, setCV }) {
           maxLength="64"
           value={job.role}
           onChange={(e) => updateJob(index, 'role', e.target.value)}
-          required/>
+          required
+        />
       </div>
       <div className="form-row" >
         <label htmlFor={`jobStart-${index}`}>Start Date *</label>
@@ -44,6 +46,7 @@ function Experience({ cv, setCV }) {
           placeholder="YYYY-MM"
           value={job.start}
           onChange={(e) => updateJob(index, 'start', e.target.value)}
+          required
         />
       </div>
       <div className="form-row" >
@@ -66,7 +69,8 @@ function Experience({ cv, setCV }) {
           name="location"
           value={job.location} 
           onChange={(e) => updateJob(index, 'location', e.target.value)}
-          required/>
+          required
+        />
       </div>
       <div className="form-row" >
         <label htmlFor={`description-${index}`}>Description</label>
@@ -75,15 +79,32 @@ function Experience({ cv, setCV }) {
           name="description"
           maxLength="500"
           value={job.description} 
-          onChange={(e) => updateJob(index, 'description', e.target.value)}/>
+          onChange={(e) => updateJob(index, 'description', e.target.value)}
+        />
       </div>
     </div>
   )
+
+  function addJob() {
+    const job = {
+      company: "",
+      role: "",
+      start: "",
+      end: "",
+      location: "",
+      description: "",
+    };
+
+    const updatedJobs = [...cv.experience, job];
+
+    setCV({ ...cv, experience: updatedJobs });
+  }
 
   return (
     <>
     <div className="form-header">
         <h2>Experience</h2>
+        <button type="button" onClick={addJob}>Add</button>
     </div>
     {jobsList}
     </>

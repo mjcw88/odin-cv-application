@@ -11,38 +11,32 @@ const blankCV = {
   email: "",
   phone: "",
   location: "",
-  experience: [
-    {
-      company: "",
-      role: "",
-      start: "",
-      end: "",
-      location: "",
-      description: "",
-    }
-  ],
+  experience: [],
   education: [
-    {
-      name: "",
-      qualification: "",
-      start: "",
-      end: "",
-      location: "",
-    }
+    // {
+    //   name: "",
+    //   qualification: "",
+    //   start: "",
+    //   end: "",
+    //   location: "",
+    // }
   ]
 };
 
   const [cv, setCV] = useState(blankCV);
-  const [draft, setDraft] = useState(cv);
+  const [draft, setDraft] = useState(structuredClone(cv));
+  const [editBtn, setDisabledEditBtn] = useState(true);
 
   function submitCV(event) {
     event.preventDefault();
     setCV(draft);
-    setDraft(blankCV);
+    setDraft(structuredClone(blankCV));
+    setDisabledEditBtn(false);
   }
 
   function editForm() {
-    setDraft(cv);
+    setDraft(structuredClone(cv));
+    setDisabledEditBtn(true);
   }
 
   return (
@@ -52,7 +46,7 @@ const blankCV = {
       </div>
       <div className="form-cv-container">
         <div className="edit-btn-container">
-          <button onClick={editForm}>Edit</button>
+          <button onClick={editForm} disabled={editBtn}>Edit</button>
         </div>
         <div className="form-container">
           <form onSubmit={submitCV}>
