@@ -12,7 +12,7 @@ function Personal({ cv, setCV }) {
           <h2>Personal Details</h2>
         </div>
         <div className="form-row">
-          <label htmlFor="name">Full Name *</label>
+          <label htmlFor="name">Full Name <span className="required">*</span></label>
           <input
             type="text"
             id="name"

@@ -52,13 +52,13 @@ function CV({ cv }) {
       </div>
       {hasJobs 
       ? <div className="experience-container">
-          <h2>Experience</h2>
+          <h3>Experience</h3>
           {jobsList}
         </div> 
       : null}
       {hasSchools 
       ? <div className="education-container">
-          <h2>Education</h2>
+          <h3>Education</h3>
           {schoolList}
         </div>
         : null}

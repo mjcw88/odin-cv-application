@@ -34,7 +34,7 @@ function Education({ cv, setCV }) {
   const schoolList = schools.map((school, index) =>
     <div className="school-form-container" key={school.id}>
       <div className="form-row">
-        <label htmlFor={`school-${index}`}>School *</label>
+        <label htmlFor={`school-${index}`}>School <span className="required">*</span></label>
         <input
           type="text"
           id={`school-${index}`}
@@ -45,7 +45,7 @@ function Education({ cv, setCV }) {
           required/>
       </div>
       <div className="form-row" >
-        <label htmlFor={`role-${index}`}>Qualification *</label>
+        <label htmlFor={`role-${index}`}>Qualification <span className="required">*</span></label>
         <input
           type="text"
           id={`qualification-${index}`}
@@ -56,7 +56,7 @@ function Education({ cv, setCV }) {
           required/>
       </div>
       <div className="form-row" >
-        <label htmlFor={`schoolStart-${index}`}>Start Date *</label>
+        <label htmlFor={`schoolStart-${index}`}>Start Date <span className="required">*</span></label>
         <input
           type="month"
           id={`schoolStart-${index}`}
@@ -79,7 +79,7 @@ function Education({ cv, setCV }) {
           onChange={(e) => updateSchool(index, 'end', e.target.value)}/>
       </div>
       <div className="form-row" >
-        <label htmlFor={`schoolLocation-${index}`}>Location *</label>
+        <label htmlFor={`schoolLocation-${index}`}>Location <span className="required">*</span></label>
         <input
           type="text"
           id={`schoolLocation-${index}`}
