@@ -2,6 +2,40 @@ import { useState } from "react";
 import "../styles/form.css";
 
 function Education({ cv, setCV, setSubmitBtn }) {
+  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="alert-circle">
+    <g>
+    <line fill="none" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="8" y2="12"/>
+    <line fill="none" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="16" y2="16"/>
+    <circle cx="12" cy="12" data-name="--Circle" fill="none" id="_--Circle" r="10" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    </g>
+    </g>
+    </svg>
+
+  const ADD_BTN = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="add-square">
+    <g>
+    <rect data-name="--Rectangle" fill="none" height="20" id="_--Rectangle" rx="2" ry="2" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" x="2" y="2"/>
+    <line fill="none" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="15.5" x2="8.5" y1="12" y2="12"/>
+    <line fill="none" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="15.5" y2="8.5"/>
+    </g>
+    </g>
+    </g>
+    </svg>
+  const ARROW = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="F-Chevron">
+    <polyline fill="none" id="Left" points="15.5 5 8.5 12 15.5 19" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    </g>
+    </svg>
+
   const schools = cv.education;
   const [schoolsDropdown, setIsOpen] = useState([]);
   const [schoolsSaved, setIsSaved] = useState([]);
@@ -61,7 +95,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
   };
 
   function isOpen(id) {
-    return schoolsDropdown.find((school) => school.id === id).isOpen;
+    return schoolsDropdown.find((job) => job.id === id)?.isOpen ?? false;
   }
 
   function flipDropDownMenu(id) {
@@ -165,7 +199,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
         <div className="school-name">
           {school.name || `School ${index + 1}`}
         </div>
-        <div className="dropdown-btn">
+        <div className={`dropdown-btn-container ${isOpen(school.id) ? "active" : ""}`}>
           <button
             type="button"
             onClick={() => flipDropDownMenu(school.id)}
@@ -174,7 +208,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
               (unsavedSchool?.id === school.id)
             }
           >
-          ↓
+          {ARROW}
           </button>
         </div>
       </div>
@@ -195,7 +229,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             className={invalidClass(warnings[school.id]?.name)}
           />
           {warnings[school.id]?.name && (
-            <div className="required-warning">School name is required.</div>
+            <div className="required-warning">{ALERT_SVG} School name is required.</div>
           )}
         </div>
         <div className="form-row" >
@@ -214,7 +248,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             className={invalidClass(warnings[school.id]?.qualification)}
           />
           {warnings[school.id]?.qualification && (
-            <div className="required-warning">Qualification is required.</div>
+            <div className="required-warning">{ALERT_SVG} Qualification is required.</div>
           )}
         </div>
         <div className="form-row" >
@@ -232,10 +266,10 @@ function Education({ cv, setCV, setSubmitBtn }) {
             className={invalidClass(warnings[school.id]?.start)}
           />
           {warnings[school.id]?.start && (
-            <div className="required-warning">Start date is required.</div>
+            <div className="required-warning">{ALERT_SVG} Start date is required.</div>
           )}
           {warnings[school.id]?.startInvalid && (
-            <div className="required-warning">Start date is invalid.</div>
+            <div className="required-warning">{ALERT_SVG} Start date is invalid.</div>
           )}
         </div>
         <div className="form-row" >
@@ -253,7 +287,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             className={invalidClass(warnings[school.id]?.end)}
           />
           {warnings[school.id]?.endInvalid && (
-            <div className="required-warning">End date is invalid.</div>
+            <div className="required-warning">{ALERT_SVG} End date is invalid.</div>
           )}
         </div>
         <div className="form-row" >
@@ -271,7 +305,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             className={invalidClass(warnings[school.id]?.location)}
           />
           {warnings[school.id]?.location && (
-            <div className="required-warning">Location is required.</div>
+            <div className="required-warning">{ALERT_SVG} Location is required.</div>
           )}
         </div>
         <div className="form-row">
@@ -288,7 +322,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
     <div className="education-container background-style">
       <div className="form-header">
           <h3>Education</h3>
-          <button type="button" onClick={addSchool} disabled={activeSchoolId !== null}>Add</button>
+          <button type="button" title="Add School" onClick={addSchool} disabled={activeSchoolId !== null}>{ADD_BTN}</button>
       </div>
       {schoolList}
     </div>

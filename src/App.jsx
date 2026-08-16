@@ -71,7 +71,18 @@ const blankCV = {
       </div>
       <div className="form-cv-container">
         <div className="edit-btn-container background-style">
-          <button onClick={editForm} disabled={editBtn}>Edit</button>
+          <button title="Edit CV" onClick={editForm} disabled={editBtn}>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <g id="Complete">
+          <g id="edit">
+          <g>
+          <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <polygon fill="none" points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          </g>
+          </g>
+          </g>
+          </svg>
+          </button>
         </div>
         <div className="form-container">
           <form onSubmit={submitCV}>
@@ -83,9 +94,11 @@ const blankCV = {
             </div>
           </form>
         </div>
-        <div className="cv-container">
-          <CV cv={cv} />
-        </div>
+        {cv && (
+          <div className="cv-container">
+            <CV cv={cv} />
+          </div>
+        )}
       </div>
     </>
   );

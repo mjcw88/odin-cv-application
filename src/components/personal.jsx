@@ -2,6 +2,18 @@ import { useState } from 'react';
 import '../styles/form.css';
 
 function Personal({ cv, setCV, errors }) {
+  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="alert-circle">
+    <g>
+    <line fill="none" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="8" y2="12"/>
+    <line fill="none" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="16" y2="16"/>
+    <circle cx="12" cy="12" data-name="--Circle" fill="none" id="_--Circle" r="10" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    </g>
+    </g>
+    </svg>
   const [warnings, setWarnings] = useState({});
 
   function isValidEmail(email) {
@@ -52,7 +64,7 @@ function Personal({ cv, setCV, errors }) {
           className={invalidClass(warnings?.name || errors?.name)}
         />
         {(warnings?.name || errors?.name) && (
-          <div className="required-warning">Name is required.</div>
+          <div className="required-warning">{ALERT_SVG} Name is required.</div>
         )}
       </div>
       <div className="form-row">
@@ -70,7 +82,7 @@ function Personal({ cv, setCV, errors }) {
           className={invalidClass(warnings?.email || errors?.email)}
         />
         {(warnings?.email || errors?.email) && (
-          <div className="required-warning">Email is invalid.</div>
+          <div className="required-warning">{ALERT_SVG} Email is invalid.</div>
         )}
       </div>
       <div className="form-row">

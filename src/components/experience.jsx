@@ -2,6 +2,39 @@ import { useState } from "react";
 import "../styles/form.css";
 
 function Experience({ cv, setCV, setSubmitBtn }) {
+  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="alert-circle">
+    <g>
+    <line fill="none" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="8" y2="12"/>
+    <line fill="none" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="16" y2="16"/>
+    <circle cx="12" cy="12" data-name="--Circle" fill="none" id="_--Circle" r="10" stroke="#FF0033" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    </g>
+    </g>
+    </svg>
+  const ADD_BTN = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="add-square">
+    <g>
+    <rect data-name="--Rectangle" fill="none" height="20" id="_--Rectangle" rx="2" ry="2" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" x="2" y="2"/>
+    <line fill="none" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="15.5" x2="8.5" y1="12" y2="12"/>
+    <line fill="none" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="15.5" y2="8.5"/>
+    </g>
+    </g>
+    </g>
+    </svg>
+  const ARROW = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <title/>
+    <g id="Complete">
+    <g id="F-Chevron">
+    <polyline fill="none" id="Left" points="15.5 5 8.5 12 15.5 19" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    </g>
+    </svg>
+
   const jobs = cv.experience;
   const [jobsDropdown, setIsOpen] = useState([]);
   const [jobsSaved, setIsSaved] = useState([]);
@@ -62,7 +95,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
   };
 
   function isOpen(id) {
-    return jobsDropdown.find((job) => job.id === id).isOpen;
+    return jobsDropdown.find((job) => job.id === id)?.isOpen ?? false;
   }
 
   function flipDropDownMenu(id) {
@@ -166,7 +199,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
         <div className="job-name">
           {job.company || `Job ${index + 1}`}
         </div>
-        <div className="dropdown-btn">
+        <div className={`dropdown-btn-container ${isOpen(job.id) ? "active" : ""}`}>
           <button
             type="button"
             onClick={() => flipDropDownMenu(job.id)}
@@ -175,7 +208,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
               (unsavedJob?.id === job.id)
             }
           >
-          ↓
+          {ARROW}
           </button>
         </div>
       </div>
@@ -196,7 +229,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             className={invalidClass(warnings[job.id]?.company)}
           />
           {warnings[job.id]?.company && (
-            <div className="required-warning">Company name is required.</div>
+            <div className="required-warning">{ALERT_SVG} Company name is required.</div>
           )}
         </div>
         <div className="form-row" >
@@ -215,7 +248,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             }}
           />
           {warnings[job.id]?.role && (
-            <div className="required-warning">Role is required.</div>
+            <div className="required-warning">{ALERT_SVG} Role is required.</div>
           )}
         </div>
         <div className="form-row" >
@@ -233,10 +266,10 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             }}
           />
           {warnings[job.id]?.start && (
-            <div className="required-warning">Start date is required.</div>
+            <div className="required-warning">{ALERT_SVG} Start date is required.</div>
           )}
           {warnings[job.id]?.startInvalid && (
-            <div className="required-warning">Start date is invalid.</div>
+            <div className="required-warning">{ALERT_SVG} Start date is invalid.</div>
           )}
         </div>
         <div className="form-row" >
@@ -254,7 +287,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             }}
           />
           {warnings[job.id]?.endInvalid && (
-            <div className="required-warning">End date is invalid.</div>
+            <div className="required-warning">{ALERT_SVG} End date is invalid.</div>
           )}
         </div>
         <div className="form-row" >
@@ -273,7 +306,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             }}
           />
           {warnings[job.id]?.location && (
-            <div className="required-warning">Location is required.</div>
+            <div className="required-warning">{ALERT_SVG} Location is required.</div>
           )}
         </div>
         <div className="form-row" >
@@ -303,7 +336,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
       <div className="experience-container background-style">
         <div className="form-header">
             <h3>Experience</h3>
-            <button type="button" onClick={addJob} disabled={activeJobId !== null}>Add</button>
+            <button type="button" title="Add Job" onClick={addJob} disabled={activeJobId !== null}>{ADD_BTN}</button>
         </div>
         {jobsList}
       </div>
