@@ -44,11 +44,13 @@ function CV({ cv }) {
         <div>
           <h2>{cv.name}</h2>
         </div>
-        <div className="contact-info-container">
-          <div>{cv.email}</div>
-          <div>{cv.phone}</div>
-          <div>{cv.location}</div>
-        </div>
+        {(cv.email || cv.phone || cv.location) && (
+          <div className="contact-info-container">
+            {cv.email && <div>{cv.email}</div>}
+            {cv.phone && <div>{cv.phone}</div>}
+            {cv.location && <div>{cv.location}</div>}
+          </div>
+        )}
       </div>
       {hasJobs 
       ? <div className="experience-container">

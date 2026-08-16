@@ -18,9 +18,42 @@ const blankCV = {
   const [cv, setCV] = useState(blankCV);
   const [draft, setDraft] = useState(structuredClone(cv));
   const [editBtn, setDisabledEditBtn] = useState(true);
+  const [errors, setErrors] = useState({});
+  const [experienceActive, setExperienceActive] = useState(null);
+  const [educationActive, setEducationActive] = useState(null);
+
+  const submitBtn = experienceActive !== null || educationActive !== null;
+
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  function validateCV(data) {
+    const warnings = {};
+
+    if (!data.name.trim()) {
+      warnings.name = true;
+    }
+
+    if (data.email.trim() && !isValidEmail(data.email.trim())) {
+      warnings.email = true
+    }
+
+    return warnings;
+  }
 
   function submitCV(event) {
     event.preventDefault();
+
+    const validationErrors = validateCV(draft);
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
     setCV(draft);
     setDraft(structuredClone(blankCV));
     setDisabledEditBtn(false);
@@ -42,11 +75,11 @@ const blankCV = {
         </div>
         <div className="form-container">
           <form onSubmit={submitCV}>
-            <Personal cv={draft} setCV={setDraft} />
-            <Experience cv={draft} setCV={setDraft} />
-            <Education cv={draft} setCV={setDraft} />
+            <Personal cv={draft} setCV={setDraft} errors={errors}/>
+            <Experience cv={draft} setCV={setDraft} setSubmitBtn={setExperienceActive} />
+            <Education cv={draft} setCV={setDraft} setSubmitBtn={setEducationActive} />
             <div className="submit-btn-container background-style">
-              <button type="submit">Submit</button>
+              <button type="submit" disabled={submitBtn}>Submit</button>
             </div>
           </form>
         </div>

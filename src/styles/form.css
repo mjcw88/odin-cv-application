@@ -42,6 +42,10 @@ form {
     font-size: 1rem;
 }
 
+.invalid {
+    border: 0.125rem solid var(--red) !important;
+}
+
 .form-row input[type="text"],
 .form-row input[type="email"],
 .form-row input[type="tel"],
@@ -58,8 +62,9 @@ textarea {
 .form-row input[type="tel"]:focus,
 .form-row input[type="month"]:focus,
 textarea:focus {
-    border: 0.125rem solid var(--blue);
+    border: 0.125rem solid var(--blue) !important;
 }
+
 
 textarea {
     resize: vertical;
@@ -90,18 +95,31 @@ textarea {
     min-height: calc(var(--size ) * 2);
 }
 
-.job-name-container {
+.job-name-container,
+.school-name-container {
     display: flex;
     gap: 1rem;
     justify-content: space-between;
 }
 
-.job-name {
+.job-name,
+.school-name {
     font-weight: bold;
 }
 
 .hidden {
     display: none;
+}
+
+.dropdown-container-active {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.required-warning {
+    color: var(--red);
+    font-size: .75rem;
 }
 
 @media only screen and (min-width: 768px) {

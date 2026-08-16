@@ -1,10 +1,12 @@
 import { useState } from "react";
-import '../styles/form.css';
+import "../styles/form.css";
 
-function Experience({ cv, setCV }) {
+function Experience({ cv, setCV, setSubmitBtn }) {
+  const jobs = cv.experience;
   const [jobsDropdown, setIsOpen] = useState([]);
   const [jobsSaved, setIsSaved] = useState([]);
   const [deleteBtn, setDeleteBtn] = useState(true);
+  const [warnings, setWarnings] = useState({});
 
   function addJob() {
     const job = {
@@ -36,8 +38,8 @@ function Experience({ cv, setCV }) {
     updatedJobs.splice(index, 1);
     setCV({ ...cv, experience: updatedJobs });
 
-    setIsOpen(jobsDropdown.filter((j) => j.id !== jobId));
-    setIsSaved(jobsSaved.filter((j) => j.id !== jobId));
+    setIsOpen(jobsDropdown.filter((job) => job.id !== jobId));
+    setIsSaved(jobsSaved.filter((job) => job.id !== jobId));
 
     setDeleteBtn(true);
   }
@@ -51,8 +53,6 @@ function Experience({ cv, setCV }) {
       removeJob(index);
     }
   }
-
-  const jobs = cv.experience;
 
   const updateJob = (index, field, value) => {
     const updatedExperience = jobs.map((job, i) =>
@@ -78,34 +78,87 @@ function Experience({ cv, setCV }) {
     if (isSaved) setDeleteBtn(false);
   }
 
-  function saveJob(id) {
+  function isDateValid(date) {
+    const dateRegex = /^\d{4}-(0[1-9]|1[0-2])$/;
+    return dateRegex.test(date);
+  }
+
+  function setFieldWarning(id, field, value) {
+    setWarnings((prev) => ({
+      ...prev,
+      [id]: {
+        ...prev[id],
+        [field]: value,
+      },
+    }));
+  }
+
+  function isInputValid(id, field, value) {
+    if (field === "start") {
+      setFieldWarning(id, "startInvalid", !!value && !isDateValid(value));
+      setFieldWarning(id, "start", !value);
+    } else if (field === "end") {
+      setFieldWarning(id, "endInvalid", !!value && !isDateValid(value));
+    } else if (field === "company") {
+      setFieldWarning(id, "company", !value);
+    } else if (field === "role") {
+      setFieldWarning(id, "role", !value);
+    } else if (field === "location") {
+      setFieldWarning(id, "location", !value);
+    }
+  }
+
+  function isValid(id) {
     const job = cv.experience.find((job) => job.id === id);
 
-    if (!job.company) return;
-    if (!job.role) return;
-    if (!job.start) return;
-    if (!job.location) return;
+    const jobWarnings = {
+      company: !job.company,
+      role: !job.role,
+      start: !job.start,
+      startInvalid: !!job.start && !isDateValid(job.start),
+      endInvalid: !!job.end && !isDateValid(job.end),
+      location: !job.location,
+    };
 
-    const isSaved = {
-      id: id,
+    const isInvalid = Object.values(jobWarnings).some(Boolean);
+
+    if (isInvalid) {
+      setWarnings((prev) => ({ ...prev, [id]: jobWarnings }));
+      return false;
     }
-    setIsSaved([...jobsSaved, isSaved]);
 
+    setWarnings((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
+    return true;
+  }
+
+  function saveJob(id) {
+    if (!isValid(id)) return;
+
+    const isSaved = { id };
+    setIsSaved([...jobsSaved, isSaved]);
     flipDropDownMenu(id);
     setDeleteBtn(false);
   }
 
-  // A job counts as "active" if it's an unsaved job currently being filled in,
+  function invalidClass(...flags) {
+    return flags.some(Boolean) ? "invalid" : "";
+  }
+
+  // A job counts as "active" if it"s an unsaved job currently being filled in,
   // or a saved job whose dropdown is currently expanded. Only one of these
   // should ever block the rest of the UI at a time.
-  const unsavedJob = jobs.find(
-    (job) => !jobsSaved.some((saved) => saved.id === job.id)
-  );
+  const unsavedJob = jobs.find((job) => !jobsSaved.some((saved) => saved.id === job.id));
   const openSavedJob = jobsSaved.find((saved) => {
-    const entry = jobsDropdown.find((j) => j.id === saved.id);
+    const entry = jobsDropdown.find((job) => job.id === saved.id);
     return entry?.isOpen;
   });
   const activeJobId = unsavedJob ? unsavedJob.id : openSavedJob ? openSavedJob.id : null;
+  
+  setSubmitBtn(activeJobId);
 
   const jobsList = jobs.map((job, index) =>
     <div className="job-form-container" key={job.id}>
@@ -113,7 +166,7 @@ function Experience({ cv, setCV }) {
         <div className="job-name">
           {job.company || `Job ${index + 1}`}
         </div>
-        <div className="job-dropdown">
+        <div className="dropdown-btn">
           <button
             type="button"
             onClick={() => flipDropDownMenu(job.id)}
@@ -122,22 +175,29 @@ function Experience({ cv, setCV }) {
               (unsavedJob?.id === job.id)
             }
           >
-            ↓
+          ↓
           </button>
         </div>
       </div>
-      <div className={isOpen(job.id) ? "job-dropdown-container" : "job-dropdown-container hidden"}>
+      <div className={isOpen(job.id) ? "dropdown-container-active" : "hidden"}>
         <div className="form-row">
           <label htmlFor={`company-${index}`}>Company <span className="required">*</span></label>
-          <input 
+          <input
             type="text"
-            id={`company-${index}`} 
+            id={`company-${index}`}
             name="company"
+            placeholder="The Odin Project"
             maxLength="64"
             value={job.company}
-            onChange={(e) => updateJob(index, 'company', e.target.value)}
-            required
+            onChange={(e) => {
+              updateJob(index, "company", e.target.value);
+              isInputValid(job.id, "company", e.target.value);
+            }}
+            className={invalidClass(warnings[job.id]?.company)}
           />
+          {warnings[job.id]?.company && (
+            <div className="required-warning">Company name is required.</div>
+          )}
         </div>
         <div className="form-row" >
           <label htmlFor={`role-${index}`}>Role <span className="required">*</span></label>
@@ -145,11 +205,18 @@ function Experience({ cv, setCV }) {
             type="text"
             id={`role-${index}`}
             name="role"
+            placeholder="Web Developer"
             maxLength="64"
             value={job.role}
-            onChange={(e) => updateJob(index, 'role', e.target.value)}
-            required
+            className={invalidClass(warnings[job.id]?.role)}
+            onChange={(e) => {
+              updateJob(index, "role", e.target.value);
+              isInputValid(job.id, "role", e.target.value);
+            }}
           />
+          {warnings[job.id]?.role && (
+            <div className="required-warning">Role is required.</div>
+          )}
         </div>
         <div className="form-row" >
           <label htmlFor={`jobStart-${index}`}>Start Date <span className="required">*</span></label>
@@ -157,12 +224,20 @@ function Experience({ cv, setCV }) {
             type="month"
             id={`jobStart-${index}`}
             name="jobStart"
-            pattern="\d{4}-\d{2}"
             placeholder="YYYY-MM"
             value={job.start}
-            onChange={(e) => updateJob(index, 'start', e.target.value)}
-            required
+            className={invalidClass(warnings[job.id]?.start, warnings[job.id]?.startInvalid)}
+            onChange={(e) => {
+              updateJob(index, "start", e.target.value);
+              isInputValid(job.id, "start", e.target.value);
+            }}
           />
+          {warnings[job.id]?.start && (
+            <div className="required-warning">Start date is required.</div>
+          )}
+          {warnings[job.id]?.startInvalid && (
+            <div className="required-warning">Start date is invalid.</div>
+          )}
         </div>
         <div className="form-row" >
           <label htmlFor={`jobEnd-${index}`}>End Date</label>
@@ -170,11 +245,17 @@ function Experience({ cv, setCV }) {
             type="month"
             id={`jobEnd-${index}`}
             name="jobEnd"
-            pattern="\d{4}-\d{2}"
             placeholder="YYYY-MM"
             value={job.end}
-            onChange={(e) => updateJob(index, 'end', e.target.value)}
+            className={invalidClass(warnings[job.id]?.endInvalid)}
+            onChange={(e) => {
+              updateJob(index, "end", e.target.value);
+              isInputValid(job.id, "end", e.target.value);
+            }}
           />
+          {warnings[job.id]?.endInvalid && (
+            <div className="required-warning">End date is invalid.</div>
+          )}
         </div>
         <div className="form-row" >
           <label htmlFor={`location-${index}`}>Location <span className="required">*</span></label>
@@ -182,10 +263,18 @@ function Experience({ cv, setCV }) {
             type="text"
             id={`location-${index}`}
             name="location"
-            value={job.location} 
-            onChange={(e) => updateJob(index, 'location', e.target.value)}
-            required
+            placeholder="London"
+            maxLength="64"
+            value={job.location}
+            className={invalidClass(warnings[job.id]?.location)} 
+            onChange={(e) => {
+              updateJob(index, "location", e.target.value);
+              isInputValid(job.id, "location", e.target.value);;
+            }}
           />
+          {warnings[job.id]?.location && (
+            <div className="required-warning">Location is required.</div>
+          )}
         </div>
         <div className="form-row" >
           <label htmlFor={`description-${index}`}>Description</label>
@@ -194,7 +283,10 @@ function Experience({ cv, setCV }) {
             name="description"
             maxLength="1000"
             value={job.description} 
-            onChange={(e) => updateJob(index, 'description', e.target.value)}
+            onChange={(e) => {
+              updateJob(index, "description", e.target.value);
+              isInputValid(job.id, "description", e.target.value);
+            }}
           />
         </div>
         <div className="form-row">
