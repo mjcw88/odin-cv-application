@@ -31,7 +31,7 @@ function Personal({ cv, setCV, errors }) {
     if (field === "name") {
       setFieldWarning("name", !value);
     } else if (field === "email") {
-      setFieldWarning("email", !isValidEmail(value));
+      setFieldWarning("email", value.trim() !== "" && !isValidEmail(value.trim()));
     }
   }
   
