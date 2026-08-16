@@ -328,11 +328,11 @@ function Experience({ cv, setCV, setSubmitBtn }) {
           />
         </div>
         <div className="form-row form-row-buttons">
-          <div className="delete-btn-container">
-            <button type="button" title="Delete Job" aria-label={`Delete Job: ${job.role} at ${job.company}`} onClick={() => removeJob(index)} hidden={deleteBtn}>Delete</button>
-          </div>
           <div>
             <button type="button" title="Cancel Job" aria-label={`Cancel Job: ${job.role} at ${job.company}`} onClick={() => cancelJob(index, job.id)}>Cancel</button>
+          </div>
+          <div>
+            <button type="button" className="delete-btn" title="Delete Job" aria-label={`Delete Job: ${job.role} at ${job.company}`} onClick={() => removeJob(index)} hidden={deleteBtn}>Delete</button>
             <button type="button" title="Save Job" aria-label={`Save Job: ${job.role} at ${job.company}`} onClick={() => saveJob(job.id)}>Save</button>
           </div>
         </div>

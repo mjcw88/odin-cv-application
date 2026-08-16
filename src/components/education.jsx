@@ -313,10 +313,14 @@ function Education({ cv, setCV, setSubmitBtn }) {
             <div className="required-warning">{ALERT_SVG} Location is required.</div>
           )}
         </div>
-        <div className="form-row">
-          <button type="button" title="Delete School" aria-label={`Delete Education: ${school.qualification} at ${school.name}`} onClick={() => removeSchool(index)} hidden={deleteBtn}>Delete</button>
-          <button type="button" title="Cancel School" aria-label={`Cancel Education: ${school.qualification} at ${school.name}`} onClick={() => cancelSchool(index, school.id)}>Cancel</button>
-          <button type="button" title="Save School" aria-label={`Save Education: ${school.qualification} at ${school.name}`} onClick={() => saveSchool(school.id)}>Save</button>
+        <div className="form-row form-row-buttons">
+          <div>
+            <button type="button" title="Cancel School" aria-label={`Cancel Education: ${school.qualification} at ${school.name}`} onClick={() => cancelSchool(index, school.id)}>Cancel</button>
+          </div>
+          <div>
+            <button className="delete-btn" type="button" title="Delete School" aria-label={`Delete Education: ${school.qualification} at ${school.name}`} onClick={() => removeSchool(index)} hidden={deleteBtn}>Delete</button>
+            <button type="button" title="Save School" aria-label={`Save Education: ${school.qualification} at ${school.name}`} onClick={() => saveSchool(school.id)}>Save</button>
+          </div>
         </div>
       </div>
     </div>

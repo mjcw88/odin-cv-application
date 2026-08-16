@@ -72,12 +72,12 @@ textarea:focus {
     gap: 1rem;
 }
 
-.delete-btn-container > button {
+.delete-btn {
     background-color: var(--deleteRed);
     color: var(--white);
 }
 
-.delete-btn-container > button:hover {
+.delete-btn:hover {
     background-color: var(--deleteRedHover);
     color: var(--white);
 }
@@ -212,15 +212,5 @@ textarea {
 
     .cv-container {
         flex: 1;
-    }
-
-    .form-row-buttons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .form-row-buttons > div > button {
-        width: auto;
     }
 }
