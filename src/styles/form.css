@@ -2,6 +2,8 @@
     --grey: hsl(218,13.6%,84.1%);
     --blue: hsl(221,97.5%,53.5%);
     --red: hsl(348,100%,50%);
+    --deleteRed: hsl(4,73.7%,49.2%);
+    --deleteRedHover:hsl(4,73.7%,43.2%);
     --white: hsl(0,0%,100%);
 }
 
@@ -65,6 +67,20 @@ textarea:focus {
     border: 0.125rem solid var(--blue) !important;
 }
 
+.form-row-buttons > div {
+    display: flex;
+    gap: 1rem;
+}
+
+.delete-btn-container > button {
+    background-color: var(--deleteRed);
+    color: var(--white);
+}
+
+.delete-btn-container > button:hover {
+    background-color: var(--deleteRedHover);
+    color: var(--white);
+}
 
 textarea {
     resize: vertical;
@@ -196,5 +212,15 @@ textarea {
 
     .cv-container {
         flex: 1;
+    }
+
+    .form-row-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .form-row-buttons > div > button {
+        width: auto;
     }
 }
