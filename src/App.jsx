@@ -66,13 +66,13 @@ const blankCV = {
 
   return (
     <>
-      <div className="header-container">
+      <header className="header-container">
         <h1>Curriculum Vitae</h1>
-      </div>
-      <div className="form-cv-container">
+      </header>
+      <section className="form-cv-container">
         <div className="edit-btn-container background-style">
-          <button title="Edit CV" onClick={editForm} disabled={editBtn}>
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <button title="Edit CV" aria-label="Edit CV" onClick={editForm} disabled={editBtn}>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <g id="Complete">
           <g id="edit">
           <g>
@@ -90,7 +90,7 @@ const blankCV = {
             <Experience cv={draft} setCV={setDraft} setSubmitBtn={setExperienceActive} />
             <Education cv={draft} setCV={setDraft} setSubmitBtn={setEducationActive} />
             <div className="submit-btn-container background-style">
-              <button type="submit" disabled={submitBtn}>Submit</button>
+              <button type="submit" title="Submit CV" aria-label="Submit" disabled={submitBtn}>Submit</button>
             </div>
           </form>
         </div>
@@ -99,7 +99,7 @@ const blankCV = {
             <CV cv={cv} />
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 }

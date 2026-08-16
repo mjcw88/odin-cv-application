@@ -2,8 +2,7 @@ import { useState } from 'react';
 import '../styles/form.css';
 
 function Personal({ cv, setCV, errors }) {
-  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="alert-circle">
     <g>
@@ -57,6 +56,7 @@ function Personal({ cv, setCV, errors }) {
           placeholder="Joe Bloggs"
           maxLength="64"
           value={cv.name}
+          aria-required="true"
           onChange={(e) => {
             setCV({ ...cv, name: e.target.value })
             isInputValid("name", e.target.value);
@@ -70,7 +70,7 @@ function Personal({ cv, setCV, errors }) {
       <div className="form-row">
         <label htmlFor="email">Email</label>
         <input
-          type="text"
+          type="email"
           id="email"
           name="email"
           placeholder="email@email.com"

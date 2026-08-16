@@ -2,8 +2,7 @@ import { useState } from "react";
 import "../styles/form.css";
 
 function Education({ cv, setCV, setSubmitBtn }) {
-  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="alert-circle">
     <g>
@@ -15,8 +14,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
     </g>
     </svg>
 
-  const ADD_BTN = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ADD_BTN = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="add-square">
     <g>
@@ -27,8 +25,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
     </g>
     </g>
     </svg>
-  const ARROW = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ARROW = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="F-Chevron">
     <polyline fill="none" id="Left" points="15.5 5 8.5 12 15.5 19" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -202,6 +199,10 @@ function Education({ cv, setCV, setSubmitBtn }) {
         <div className={`dropdown-btn-container ${isOpen(school.id) ? "active" : ""}`}>
           <button
             type="button"
+            title="Expand School"
+            aria-label={`Expand ${school.qualification} at ${school.name} details`}
+            aria-expanded={`${isOpen(school.id) ? "true" : "false"}`}
+            aria-controls={`school-details-${index}`}
             onClick={() => flipDropDownMenu(school.id)}
             disabled={
               (activeSchoolId !== null && activeSchoolId !== school.id) ||
@@ -212,7 +213,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
           </button>
         </div>
       </div>
-      <div className={isOpen(school.id) ? "dropdown-container-active" : "hidden"}>
+      <div className={isOpen(school.id) ? "dropdown-container-active" : "hidden"} id={`school-details-${index}`}>
         <div className="form-row">
           <label htmlFor={`school-${index}`}>School <span className="required">*</span></label>
           <input
@@ -222,6 +223,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             placeholder="The Odin Project"
             maxLength="64"
             value={school.name}
+            aria-required="true"
             onChange={(e) => {
               updateSchool(index, "name", e.target.value);
               isInputValid(school.id, "name", e.target.value);
@@ -241,6 +243,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             placeholder="BSc Computer Science"
             maxLength="64"
             value={school.qualification}
+            aria-required="true"
             onChange={(e) => {
               updateSchool(index, "qualification", e.target.value);
               isInputValid(school.id, "qualification", e.target.value);
@@ -259,6 +262,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             name="schoolStart"
             placeholder="YYYY-MM"
             value={school.start}
+            aria-required="true"
             onChange={(e) => {
               updateSchool(index, "start", e.target.value);
               isInputValid(school.id, "start", e.target.value);
@@ -298,6 +302,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
             name="schoolLocation" value={school.location}
             placeholder="London"
             maxLength="64"
+            aria-required="true"
             onChange={(e) => {
               updateSchool(index, "location", e.target.value);
               isInputValid(school.id, "location", e.target.value);
@@ -309,9 +314,9 @@ function Education({ cv, setCV, setSubmitBtn }) {
           )}
         </div>
         <div className="form-row">
-          <button type="button" onClick={() => removeSchool(index)} hidden={deleteBtn}>Delete</button>
-          <button type="button" onClick={() => cancelSchool(index, school.id)}>Cancel</button>
-          <button type="button" onClick={() => saveSchool(school.id)}>Save</button>
+          <button type="button" title="Delete School" aria-label={`Delete Education: ${school.qualification} at ${school.name}`} onClick={() => removeSchool(index)} hidden={deleteBtn}>Delete</button>
+          <button type="button" title="Cancel School" aria-label={`Cancel Education: ${school.qualification} at ${school.name}`} onClick={() => cancelSchool(index, school.id)}>Cancel</button>
+          <button type="button" title="Save School" aria-label={`Save Education: ${school.qualification} at ${school.name}`} onClick={() => saveSchool(school.id)}>Save</button>
         </div>
       </div>
     </div>
@@ -322,7 +327,7 @@ function Education({ cv, setCV, setSubmitBtn }) {
     <div className="education-container background-style">
       <div className="form-header">
           <h3>Education</h3>
-          <button type="button" title="Add School" onClick={addSchool} disabled={activeSchoolId !== null}>{ADD_BTN}</button>
+          <button type="button" title="Add School" aria-label="Add School" onClick={addSchool} disabled={activeSchoolId !== null}>{ADD_BTN}</button>
       </div>
       {schoolList}
     </div>

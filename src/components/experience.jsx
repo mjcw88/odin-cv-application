@@ -2,8 +2,7 @@ import { useState } from "react";
 import "../styles/form.css";
 
 function Experience({ cv, setCV, setSubmitBtn }) {
-  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ALERT_SVG = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="alert-circle">
     <g>
@@ -14,8 +13,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
     </g>
     </g>
     </svg>
-  const ADD_BTN = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ADD_BTN = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="add-square">
     <g>
@@ -26,8 +24,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
     </g>
     </g>
     </svg>
-  const ARROW = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <title/>
+  const ARROW = <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g id="Complete">
     <g id="F-Chevron">
     <polyline fill="none" id="Left" points="15.5 5 8.5 12 15.5 19" stroke="#546583" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
@@ -202,6 +199,10 @@ function Experience({ cv, setCV, setSubmitBtn }) {
         <div className={`dropdown-btn-container ${isOpen(job.id) ? "active" : ""}`}>
           <button
             type="button"
+            title="Expand Job"
+            aria-label={`Expand ${job.role} at ${job.company} details`}
+            aria-expanded={`${isOpen(job.id) ? "true" : "false"}`}
+            aria-controls={`job-details-${index}`}
             onClick={() => flipDropDownMenu(job.id)}
             disabled={
               (activeJobId !== null && activeJobId !== job.id) ||
@@ -212,7 +213,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
           </button>
         </div>
       </div>
-      <div className={isOpen(job.id) ? "dropdown-container-active" : "hidden"}>
+      <div className={isOpen(job.id) ? "dropdown-container-active" : "hidden"} id={`job-details-${index}`}>
         <div className="form-row">
           <label htmlFor={`company-${index}`}>Company <span className="required">*</span></label>
           <input
@@ -222,6 +223,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             placeholder="The Odin Project"
             maxLength="64"
             value={job.company}
+            aria-required="true"
             onChange={(e) => {
               updateJob(index, "company", e.target.value);
               isInputValid(job.id, "company", e.target.value);
@@ -241,6 +243,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             placeholder="Web Developer"
             maxLength="64"
             value={job.role}
+            aria-required="true"
             className={invalidClass(warnings[job.id]?.role)}
             onChange={(e) => {
               updateJob(index, "role", e.target.value);
@@ -259,6 +262,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             name="jobStart"
             placeholder="YYYY-MM"
             value={job.start}
+            aria-required="true"
             className={invalidClass(warnings[job.id]?.start, warnings[job.id]?.startInvalid)}
             onChange={(e) => {
               updateJob(index, "start", e.target.value);
@@ -299,6 +303,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
             placeholder="London"
             maxLength="64"
             value={job.location}
+            aria-required="true"
             className={invalidClass(warnings[job.id]?.location)} 
             onChange={(e) => {
               updateJob(index, "location", e.target.value);
@@ -323,9 +328,9 @@ function Experience({ cv, setCV, setSubmitBtn }) {
           />
         </div>
         <div className="form-row">
-          <button type="button" onClick={() => removeJob(index)} hidden={deleteBtn}>Delete</button>
-          <button type="button" onClick={() => cancelJob(index, job.id)}>Cancel</button>
-          <button type="button" onClick={() => saveJob(job.id)}>Save</button>
+          <button type="button" title="Delete Job" aria-label={`Delete Job: ${job.role} at ${job.company}`} onClick={() => removeJob(index)} hidden={deleteBtn}>Delete</button>
+          <button type="button" title="Cancel Job" aria-label={`Cancel Job: ${job.role} at ${job.company}`} onClick={() => cancelJob(index, job.id)}>Cancel</button>
+          <button type="button" title="Save Job" aria-label={`Save Job: ${job.role} at ${job.company}`} onClick={() => saveJob(job.id)}>Save</button>
         </div>
       </div>
     </div>
@@ -336,7 +341,7 @@ function Experience({ cv, setCV, setSubmitBtn }) {
       <div className="experience-container background-style">
         <div className="form-header">
             <h3>Experience</h3>
-            <button type="button" title="Add Job" onClick={addJob} disabled={activeJobId !== null}>{ADD_BTN}</button>
+            <button type="button" title="Add Job" aria-label="Add Job" onClick={addJob} disabled={activeJobId !== null}>{ADD_BTN}</button>
         </div>
         {jobsList}
       </div>
