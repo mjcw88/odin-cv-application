@@ -150,6 +150,9 @@ textarea {
 }
 
 .required-warning {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
     color: var(--red);
     font-size: .75rem;
 }
