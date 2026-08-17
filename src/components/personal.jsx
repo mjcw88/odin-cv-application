@@ -14,6 +14,7 @@ function Personal({ cv, setCV, errors }) {
     </g>
     </svg>
   const [warnings, setWarnings] = useState({});
+  const [touched, setTouched] = useState({});
 
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,13 +29,14 @@ function Personal({ cv, setCV, errors }) {
   }
 
   function isInputValid(field, value) {
+    setTouched((prev) => ({ ...prev, [field]: true }));
     if (field === "name") {
       setFieldWarning("name", !value);
     } else if (field === "email") {
       setFieldWarning("email", value.trim() !== "" && !isValidEmail(value.trim()));
     }
   }
-  
+    
   function invalidClass(input) {
     return input === true ? "invalid" : "";
   }
@@ -61,9 +63,9 @@ function Personal({ cv, setCV, errors }) {
             setCV({ ...cv, name: e.target.value })
             isInputValid("name", e.target.value);
             }}
-          className={invalidClass(warnings?.name || errors?.name)}
+          className={invalidClass(touched.name ? warnings.name : errors?.name)}
         />
-        {(warnings?.name || errors?.name) && (
+        {(touched.name ? warnings.name : errors?.name) && (
           <div className="required-warning">{ALERT_SVG} Name is required.</div>
         )}
       </div>
